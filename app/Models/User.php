@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+//メール認証時にはコメントアウトを消す
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable //implements MustverifyEmail <-メール認証時にコメントアウトを消す
 {
     use HasApiTokens, HasFactory, Notifiable;
 

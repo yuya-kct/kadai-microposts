@@ -124,4 +124,17 @@ class User extends Authenticatable //implements MustverifyEmail <-メール認�
     {
         return $this->followings()->where('follow_id', $userId)->exists();
     }
+
+    /**
+     * このユーザーとフォロー中ユーザーの投稿に絞り込む。
+     */
+    public function feed_microposts()
+    {
+        // このユーザーがフォロー中のユーザーのidを取得して配列にする
+        $userIds = $this->followings()->pluck('users.id')->toArray();
+        // このユーザーのidもその配列に追加
+        $userIds[] = $this->id;
+        // それらのユーザーが所有する投稿に絞り込む
+        return Micropost::whereIn('user_id', $userIds);
+    }
 }

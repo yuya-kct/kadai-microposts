@@ -5,6 +5,9 @@
             <h1><a class="btn btn-ghost normal-case text-xl" href="/">Microposts</a></h1>
         </div>
 
+        {{-- ユーザー一覧ページへのリンク --}}
+        <a class="link link-hover" href="{{ route('users.index') }}">Users</a>
+
         <div class="flex-none">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

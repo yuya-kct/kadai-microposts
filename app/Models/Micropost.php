@@ -23,4 +23,28 @@ class Micropost extends Model
     {
         return $this->belongsToMany(User::class, 'favorites', 'micropost_id', 'user_id')->withTimestamps();
     }
+
+    // スタンプとのリレーションシップ
+    public function stamps()
+    {
+        return $this->belongsToMany(Stamp::class, 'micropost_stamps')
+                    ->withTimestamps()
+                    ->withPivot('user_id');
+    }
+
+    /**
+     * この投稿をお気に入りしているユーザー達
+     */
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'micropost_id', 'user_id')->withTimestamps();
+    }
+
+    /**
+     * お気に入り数を取得
+     */
+    public function favorites_count()
+    {
+        return $this->favorites()->count();
+    }
 }

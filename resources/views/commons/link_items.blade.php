@@ -1,17 +1,42 @@
 @if (Auth::check())
-    {{-- ユーザー一覧ページへのリンク --}}
-    {{-- <li><a class="link link-hover" href="{{ route('users.index') }}">Users</a></li> --}}
-    {{-- ユーザー詳細ページへのリンク --}}
-    <li><a class="link link-hover" href="{{ route('users.show', Auth::user()->id) }}">My profile</a></li>
-    {{-- お気に入り一覧ページへのリンク --}}
-    <li><a class="link link-hover" href="{{ route('users.favorites', ['id' => Auth::user()->id]) }}">Favorites</a></li>
+    <li>
+        <a class="link link-hover flex items-center gap-2" 
+            href="{{ route('users.show', Auth::user()->id) }}">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+            </svg>
+            My Profile
+        </a>
+    </li>
+    <li>
+        <a class="link link-hover flex items-center gap-2" 
+            href="{{ route('users.favorites', Auth::user()->id) }}">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+            </svg>
+            Favorites
+        </a>
+    </li>
     <li class="divider lg:hidden"></li>
-    {{-- ログアウトへのリンク --}}
-    <li><a class="link link-hover" href="#" onclick="event.preventDefault();this.closest('form').submit();">Logout</a></li>
+    <li>
+        <a class="link link-hover flex items-center gap-2" href="#" 
+            onclick="event.preventDefault(); this.closest('form').submit();">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            Logout
+        </a>
+    </li>
 @else
-    {{-- ユーザー登録ページへのリンク --}}
-    <li><a class="link link-hover" href="{{ route('register') }}">Signup</a></li>
+    <li>
+        <a class="link link-hover" href="{{ route('register') }}">
+            Sign Up
+        </a>
+    </li>
     <li class="divider lg:hidden"></li>
-    {{-- ログインページへのリンク --}}
-    <li><a class="link link-hover" href="{{ route('login') }}">Login</a></li>
+    <li>
+        <a class="link link-hover" href="{{ route('login') }}">
+            Login
+        </a>
+    </li>
 @endif

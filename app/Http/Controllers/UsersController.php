@@ -30,7 +30,10 @@ class UsersController extends Controller
         $user->loadRelationshipCounts();
 
         // ユーザーの投稿一覧を作成日時の降順で取得
-        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
+        $microposts = $user->microposts()
+                            ->whereNull('community_id')
+                            ->orderBy('created_at', 'desc')
+                            ->paginate(10);
 
         // ユーザー詳細ビューでそれを表示
         return view('users.show', [
@@ -102,12 +105,15 @@ class UsersController extends Controller
         $user->loadRelationshipCounts();
 
         // ユーザーのフォロー一覧を取得
-        $favorites = $user->favorites()->paginate(10);
+        $microposts = $user->favorites()
+                        ->whereNull('community_id') // コミュニティ投稿を除外
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(10);
 
         // フォロー一覧ビューでそれらを表示
         return view('users.favorites', [
             'user' => $user,
-            'microposts' => $favorites,
+            'microposts' => $microposts,
         ]);
     }
 }

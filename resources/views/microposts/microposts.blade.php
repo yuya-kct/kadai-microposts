@@ -59,9 +59,9 @@
                             
                             {{-- アクションボタンエリア --}}
                             <div class="flex items-center justify-between max-w-md">
-                                {{-- いいねボタン --}}
+                                {{-- お気に入りボタン --}}
                                 <div class="flex items-center">
-                                    @include('favorite.favorite_button')
+                                    @include('favorite.favorite_button', ['micropost' => $micropost])
                                 </div>
                                 
                                 {{-- スタンプボタン --}}

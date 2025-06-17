@@ -9,7 +9,7 @@ class Micropost extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content'];
+    protected $fillable = ['content', 'community_id'];
 
     /**
      * この投稿を所有するユーザー。（ Userモデルとの関係を定義）
@@ -46,5 +46,10 @@ class Micropost extends Model
     public function favorites_count()
     {
         return $this->favorites()->count();
+    }
+
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
     }
 }

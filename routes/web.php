@@ -8,6 +8,7 @@ use App\Http\Controllers\MicropostsController;
 use App\Http\Controllers\UserFollowController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\StampsController;
+use App\Http\Controllers\CommunityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +40,17 @@ Route::middleware('auth')->group(function () {
     //Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'destroy']]);
     Route::resource('stamps', StampsController::class)->only(['index']);
+    
     Route::post('/microposts/{micropost}/stamps', [StampsController::class, 'store'])->name('microposts.stamps');
     Route::delete('/microposts/{micropost}/stamps', [StampsController::class, 'destroy'])->name('microposts.stamps.destroy');
+    
+    Route::get('/communities', [CommunityController::class, 'index'])->name('communities.index');
+    Route::get('/communities/create', [CommunityController::class, 'create'])->name('communities.create');
+    Route::post('/communities', [CommunityController::class, 'store'])->name('communities.store');
+    Route::get('/communities/{community}', [CommunityController::class, 'show'])->name('communities.show');
+    Route::post('/communities/join', [CommunityController::class, 'join'])->name('communities.join');
+    Route::delete('/communities/{community}/leave', [CommunityController::class, 'leave'])->name('communities.leave');
+
     Route::prefix('microposts/{id}')->group(function() {
         Route::post('favorites', [FavoritesController::class, 'store'])->name('favorites.favorite');
         Route::delete('unfavorite', [FavoritesController::class, 'destroy'])->name('favorites.unfavorite');

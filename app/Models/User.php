@@ -98,7 +98,7 @@ class User extends Authenticatable //implements MustverifyEmail <-メール認�
     /**
      * $userIdで指定されたユーザーをアンフォローする。
      * 
-     * @param  int $usereId
+     * @param  int $usreId
      * @return bool
      */
     public function unfollow(int $userId)
@@ -135,15 +135,7 @@ class User extends Authenticatable //implements MustverifyEmail <-メール認�
         // このユーザーのidもその配列に追加
         $userIds[] = $this->id;
 
-        // デバッグログを追加
-        \Log::info('Feed microposts query:', [
-            'user_ids' => $userIds,
-            'current_user_id' => $this->id
-        ]);
         // それらのユーザーが所有する投稿に絞り込む
-        return Micropost::whereIn('user_id', $userIds)
-                        ->whereNull('community_id');
-
         $query = Micropost::whereIn('user_id', $userIds)
                         ->whereNull('community_id');
         // デバッグ: SQLクエリを確認
@@ -169,7 +161,7 @@ class User extends Authenticatable //implements MustverifyEmail <-メール認�
     public function favorite(int $micropostId)
     {
         $exist = $this->is_favorites($micropostId);
-        $its_me = $this->id == $micropostId;
+        $its_me = $micropost->user_id == $this->id;
         
         if ($exist || $its_me) {
             return false;
@@ -188,7 +180,7 @@ class User extends Authenticatable //implements MustverifyEmail <-メール認�
     public function unfavorite(int $micropostId)
     {
         $exist = $this->is_favorites($micropostId);
-        $its_me = $this->id == $micropostId;
+        $its_me = $micropost->user_id == $this->id;
         
         if ($exist && !$its_me) {
             $this->favorites()->detach($micropostId);

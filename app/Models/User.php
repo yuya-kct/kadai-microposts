@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Micropost;
 
 class User extends Authenticatable //implements MustverifyEmail <-メール認証時にコメントアウトを消す
 {
@@ -161,6 +162,7 @@ class User extends Authenticatable //implements MustverifyEmail <-メール認�
     public function favorite(int $micropostId)
     {
         $exist = $this->is_favorites($micropostId);
+        $micropost = Micropost::find($micropostId);
         $its_me = $micropost->user_id == $this->id;
         
         if ($exist || $its_me) {

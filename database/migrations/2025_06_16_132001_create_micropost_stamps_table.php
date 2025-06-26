@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('stamp_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+
+            // 同じユーザーが同じ投稿に複数のスタンプを押せないようにする
+            $table->unique(['micropost_id', 'user_id']);
         });
     }
 

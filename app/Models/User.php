@@ -182,6 +182,7 @@ class User extends Authenticatable //implements MustverifyEmail <-メール認�
     public function unfavorite(int $micropostId)
     {
         $exist = $this->is_favorites($micropostId);
+        $micropost = Micropost::find($micropostId);
         $its_me = $micropost->user_id == $this->id;
         
         if ($exist && !$its_me) {
